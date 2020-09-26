@@ -1,0 +1,53 @@
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//
+//
+// A Compilation of useful accessibility css classes and features.
+// Author: Giovani Camara
+// Version: 1.0.0
+//
+//
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+#skiptocontent, .skiplinks
+	a
+		padding 6px
+		position absolute
+		top -80px
+		left 0px
+		color #000
+		border-right 1px solid #252525
+		border-bottom 1px solid #252525
+		border-bottom-right-radius 8px
+		background #FFEE2E
+		transition top 2s ease-out
+		z-index 100
+		
+		@media (prefers-reduced-motion: reduce)
+			transition none
+		
+		&:focus
+			position absolute
+			left 0px
+			top 0px
+			outline-color transparent
+			transition top .1s ease-in
+			text-decoration underline // Underline incase of color blindness
+			
+			@media (prefers-reduced-motion: reduce)
+				transition none
+			
+// Add onto this as needed
+body.user-is-tabbing main *:focus, body.user-is-tabbing footer *:focus
+	outline 2px solid #7AACFE !important
+	outline 5px auto -webkit-focus-ring-color !important
+	background-color #FFEE2E !important
+	color #000 !important
+	text-decoration underline !important
+	transition none !important
+	
+	
+

@@ -1,0 +1,18 @@
+/* TEAM */
+
+	Project Manager: Brian Kreck
+	Designer: Sandra Versteegh
+	Developer: Giovani Camara
+	Account Manager: Lydia Revelos
+
+/* SITE */
+
+	Last Update: 2020/01/18
+	Doctype: HTML 5
+	Language: English
+	IDE: Sublime Text, Filezilla, Photoshop, Illustrator
+
+/* CONTACT */	
+	
+	URL: Budbreak.com
+	Email: info [at] budbreak.com

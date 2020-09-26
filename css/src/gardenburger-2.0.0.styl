@@ -1,0 +1,987 @@
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//
+//
+// Utility classes
+//
+//
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////
+
+// Show:
+// This is an animation that will animate an element's height from
+// 0 to its unknown inline value (set by JS to be equal to an
+// "auto" height). JS then removes the inline value so the
+// height is actually "auto".
+
+@keyframes heightToInline
+	0%
+		height 0
+
+.animateHeightToInline
+	animation heightToInline .15s linear
+	overflow hidden
+
+// Hide:
+// This is a transition that will transition an element's height
+// from its unknown inline value (set by JS to be equal to an
+// "auto" height) to 0.
+
+.height0
+	transition height .15s linear !important
+	height 0 !important
+	overflow hidden
+
+
+
+[data-gardenburger]
+	
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	//
+	// Options
+	//
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	// Below this value constitutes mobile mode. If you customize,
+	// don't forget to set for JS as well at instantiation.
+	breakpoint = 600px
+
+	// Index of this GB in the array of GBs on the page (string).
+	// If there's only 1 GB (as in most cases), this should be 0.
+	// Corresponds to the mobile and desktop mode classes added
+	// by JS to the body. Each GB needs its own, so the index of
+	// the GB is included to make the classes unique.
+	index = "0"
+
+	// False hides the arrows that indicate submenu existence.
+	submenuIndicatorArrows = true
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	//
+	// Settings used for calculations
+	//
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	// Vertical padding on the anchors
+	aVertPad = 20px
+
+	// Vertical padding on the anchors in mobile mode
+	aVertPadM = 20px
+
+	// Leading (line-height) of the anchors
+	aLeading = 20px
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	//
+	// Color constants
+	//
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	// Background of the whole nav--desktop and mobile
+	color-navBG = #F5F5F5
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// Desktop
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	// Links
+	color-anchors-D = black
+
+	// Active (current page) links
+	color-anchorsActive-D = #888
+
+	// Link backgrounds
+	color-anchorsBG-D = transparent
+
+	// Link backgrounds on hover
+	color-anchorsBG-hover-D = rgba(black, .02)
+
+	// Submenu backgrounds
+	color-submenuBG-D = color-navBG
+
+	// Arrows that indicate submenu existence (Only present in desktop mode--
+	// Use "color-submenuTogglerButtons" constants for the mobile buttons.)
+	color-submenuIndicatorArrows = color-anchors-D
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// Mobile
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	// Background of the nav in mobile mode. Other calculations are
+	// based on this value (specifically whether it is light or dark.)
+	color-mobileNavBG = color-navBG
+
+	// Links
+	// The default value checks mobileNavBG's lightness and assigns accordingly
+	color-anchors-M = light(color-mobileNavBG) ? #444 : white
+
+	// Arrows that indicate submenu existence (Only present in mobile mode--
+	// Use "color-submenuIndicatorArrows" constants for the desktop indicators.)
+	color-submenuTogglerButtons = color-anchors-M
+
+	// The "burger" icon that expands the nav in mobile mode (Only present in
+	// mobile mode.)
+	color-burger = #444
+	
+	
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	//
+	// Aesthetics
+	//
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// Base - mostly shared by both mobile and desktop
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	box-sizing border-box		
+	text-align center
+	font-size 20px
+	background color-navBG
+
+	*,
+	*:before,
+	*:after
+		box-sizing border-box
+
+	ul
+		margin 0
+		padding 0
+		list-style none
+		display flex
+		flex-direction column
+
+		li
+			flex-shrink 0
+			position relative
+			margin 0
+			padding 0
+			list-style none
+			text-align left
+
+			a,
+			.linkless-nav-item
+				display block
+				line-height aLeading
+				text-decoration none
+
+				&:focus
+					// outline none
+
+			.linkless-nav-item
+				cursor default
+
+			ul
+
+				li
+				
+					a,
+					.linkless-nav-item
+						font-size 85%
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// ONLY mobile
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	mobileStyles =
+
+		// Hide the extra space from hidden menus
+		overflow hidden
+
+		// This constant acts as the basis for the progressive shading
+		// for opened deeper menus. Each A has a background derived
+		// from this, and each LI also gets a background behind that
+		// to shade the whole nav "section" when it is opened. These
+		// should be vivid, opaque (not at all transparent) colors
+		// because transparency will be added to them for the final
+		// values. Default is black or white depending on
+		// color-mobileNavBG's lightness.
+		baseHighlightColor = light(color-mobileNavBG) ? black : white
+
+
+		ul,
+		.dropdown
+			transform none !important
+
+			li
+				margin-top 1px
+				transition background .2s linear
+
+				a,
+				.linkless-nav-item
+					padding aVertPadM 20px
+					color color-anchors-M
+					background rgba(baseHighlightColor, .06)
+
+				// This class is applied as soon as a submenu begins 
+				// opening and remains until it is closed. It flips the
+				// arrow and applies a background shade on the whole
+				// nav section.
+				&.opening
+					transition background .2s linear
+					background rgba(baseHighlightColor, .06)
+
+				// This class is applied by JS on LIs that contain ULs
+				// or .dropdowns
+				&.hasChildMenu:not(.surface-visible-in-mobile)
+					display flex
+					flex-wrap wrap
+	
+					> a,
+					> .linkless-nav-item
+						flex 1 1 1px
+						max-width "calc(100% - %s)" % (aVertPadM * 2 + aLeading + 1)
+						margin-right 1px
+
+					// Mobile submenu togglers
+
+					.submenuTogglers
+						flex 0 0 (aVertPadM * 2 + aLeading)
+						appearance none
+						padding 0
+						border none
+						background rgba(baseHighlightColor, .08)
+	
+						&:focus
+							// outline none
+
+						i
+							display inline-block
+							transform-origin center 20%
+							border-style solid
+							border-color transparent
+							border-width 6px
+							border-top-color color-submenuTogglerButtons
+							transition transform .25s linear
+							margin @border-width auto 0 auto
+							size 0
+
+					&.opening > .submenuTogglers i
+						transform rotate(180deg)
+						transition transform .25s linear
+
+					> ul,
+					> .dropdown
+						flex 1 1 100%
+
+				ul,
+				.dropdown
+
+					li
+
+						a,
+						.linkless-nav-item
+							padding-left 30px
+
+						ul,
+						.dropdown
+
+							li
+
+								a,
+								.linkless-nav-item
+									padding-left 40px
+
+								ul,
+								.dropdown
+
+									li
+
+										a,
+										.linkless-nav-item
+											padding-left 50px
+
+										ul,
+										.dropdown
+
+											li
+
+												a,
+												.linkless-nav-item
+													padding-left 60px
+
+		// Top-level UL only
+
+		> ul
+			background color-mobileNavBG
+
+			> li:first-child
+				margin-top 0
+
+
+	@media (max-width: breakpoint - 1)
+		/body:not({".GB-" + index + "-ForceDesktopMode"}) &
+			{mobileStyles}
+	/body{".GB-" + index + "-ForceMobileMode"}:not({".GB-" + index + "-ForceDesktopMode"}) &
+		{mobileStyles}
+			
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// Mobile nav toggle button
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	.burger
+		text-align center			
+
+		barWidth = 30px
+		barHeight = 6px
+		barGutter = 6px
+		translateDistance = barHeight + barGutter
+
+		@keyframes move-down-then-rotate
+			50%
+				 transform translateY(translateDistance)
+			100%
+				 transform translateY(translateDistance) rotate(45deg)
+		@keyframes move-up-then-rotate
+			50%
+				 transform translateY(-(translateDistance))
+			100%
+				 transform translateY(-(translateDistance)) rotate(-45deg)
+		@keyframes unrotate-then-unmove1
+			0%
+				 transform translateY(-(translateDistance)) rotate(-45deg)
+			50%
+				 transform translateY(-(translateDistance))
+			100%
+				 transform none
+		@keyframes unrotate-then-unmove2
+			0%
+				 transform translateY(translateDistance) rotate(45deg)
+			50%
+				 transform translateY(translateDistance)
+			100%
+				 transform none	
+
+		a
+			display inline-block
+			vertical-align top
+			padding 15px
+			opacity .8
+			transition opacity .2s linear
+
+			&:focus
+				// outline none
+
+			i
+				display block
+				width barWidth
+				height barHeight
+				border-radius (@height / 2)
+				background-color color-burger
+
+				+ i
+					margin-top barGutter
+
+				../:hover
+					opacity 1
+					transition opacity .2s linear
+
+				&:first-child
+					animation .3s unrotate-then-unmove2 forwards
+
+				&:nth-child(2)
+					transition opacity .12s linear .12s
+
+				&:last-child
+					animation .3s unrotate-then-unmove1 forwards
+
+		&.ex
+
+			a
+
+				i
+
+					&:first-child
+						animation .3s move-down-then-rotate forwards
+
+					&:nth-child(2)
+						opacity 0
+						transition opacity 0s linear .15s
+
+					&:last-child
+						animation .3s move-up-then-rotate forwards	
+
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// Desktop
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	desktopStyles =
+
+		//////////////////////////////////////////////////////////////////
+		// ALL MENUS
+		//////////////////////////////////////////////////////////////////
+		// (including the top-level, always-visible one)
+
+		ul
+
+			li
+
+				a,
+				.linkless-nav-item
+					transition color .5s linear, background-color .5s linear
+					padding aVertPad 20px
+					background color-anchorsBG-D
+					color color-anchors-D
+
+				// Links on hover/focus
+				&:hover > a,
+				&.focus > a,
+				&:hover > .linkless-nav-item,
+				&.focus > .linkless-nav-item
+					// outline none
+					background-color color-anchorsBG-hover-D
+					transition color .5s linear, background-color .5s linear
+
+				// List items that have submenus
+				if submenuIndicatorArrows
+
+					&.hasChildMenu:not(.no-indicator)
+
+						> a,
+						> .linkless-nav-item
+							display flex
+							align-items center
+							padding-right 10px
+
+							// Dropdown signifier arrows
+							&:after
+								content ' '
+								margin-left 10px
+								border-style solid
+								border-color transparent
+								border-width 4px
+								margin-bottom -(@border-width * 1.5)
+								border-top-color color-submenuIndicatorArrows
+								transition border-top-color .5s linear, transform .5s linear
+
+						// Dropdown signifier arrows on hover/focus
+						&:hover > a:after,
+						&.focus > a:after,
+						&:hover > .linkless-nav-item:after,
+						&.focus > .linkless-nav-item:after
+							transition transform .5s linear
+							transform translateY(5px)
+
+				&.active > a
+					color color-anchorsActive-D
+
+
+
+				//////////////////////////////////////////////////////////
+				// SECOND-LEVEL AND DEEPER MENUS
+				//////////////////////////////////////////////////////////
+				// (all the dynamic ones)
+
+				ul
+					padding 10px 0
+
+				ul,
+				.dropdown
+					width 250px
+					z-index 10
+					background-color color-submenuBG-D
+
+					li
+						min-width 180px
+						padding 0
+						text-align left
+
+						// Flyout signifier arrows
+						if submenuIndicatorArrows
+
+							&.hasChildMenu:not(.no-indicator)
+
+								> a:after,
+								> .linkless-nav-item:after
+									margin-bottom 0
+									border-left-color color-submenuIndicatorArrows
+									border-top-color transparent
+
+								// Flyout signifier arrows on hover/focus
+								&:hover > a:after,
+								&.focus > a:after,
+								&:hover > .linkless-nav-item:after,
+								&.focus > .linkless-nav-item:after
+									transform translateX(5px) translateY(0)
+
+
+
+						//////////////////////////////////////////////////
+						// THIRD-LEVEL AND DEEPER MENUS
+						//////////////////////////////////////////////////
+						// (all the side-flyout ones)
+
+						ul,
+						.dropdown
+
+							li
+								// styles
+
+								a,
+								.linkless-nav-item
+									// styles
+
+
+
+								//////////////////////////////////////////
+								// FOURTH-LEVEL AND DEEPER(?!) MENUS
+								//////////////////////////////////////////
+								// (second level of side-flyout menus)
+
+								ul,
+								.dropdown
+									// styles
+
+									li
+										// styles
+
+										a,
+										.linkless-nav-item
+											// styles
+
+
+		//////////////////////////////////////////////////////////////////
+		// TOP UL ONLY
+		//////////////////////////////////////////////////////////////////
+
+		> ul
+			flex-direction row
+			justify-content center
+		
+		> ul:nth-of-type(2)
+			flex-wrap wrap
+			background-color #DDD
+
+
+		//////////////////////////////////////////////////////////////////
+		// "MORE" LINK FOR EXPOSING SECONDARY UL
+		//////////////////////////////////////////////////////////////////
+
+		ul
+
+			li.more-link
+
+				> span:after
+					display inline-block
+					content '+'
+					margin-left 5px
+
+		&:not(.hideSecondaryNav)
+
+			ul
+
+				li.more-link
+
+					> .linkless-nav-item
+						background-color #DDD
+
+
+		//////////////////////////////////////////////////////////////////
+		// FLIPPED (BOTTOM) NAVS
+		//////////////////////////////////////////////////////////////////
+
+		// Reverse dropdown signifier arrows
+		&.flip-v
+
+			ul
+
+				li
+
+					&.hasChildMenu:not(.no-indicator)
+
+						> a,
+						> .linkless-nav-item
+
+							&:after
+								border-width 4px
+								margin-top -(@border-width * 1.5)
+								border-top-color transparent
+								border-bottom-color color-submenuIndicatorArrows
+
+						&:hover > a:after,
+						&.focus > a:after,
+						&:hover > .linkless-nav-item:after,
+						&.focus > .linkless-nav-item:after
+							transform translateY(-5px)
+
+					ul
+
+					ul,
+					.dropdown
+
+						li
+
+							&.hasChildMenu:not(.no-indicator)
+
+								> a:after,
+								> .linkless-nav-item:after
+									border-bottom-color transparent
+
+								&:hover > a:after,
+								&.focus > a:after,
+								&:hover > .linkless-nav-item:after,
+								&.focus > .linkless-nav-item:after
+									transform translateX(5px) translateY(0)
+
+
+
+
+		//////////////////////////////////////////////////////////////////
+		// MENU TRANSITIONS
+		//////////////////////////////////////////////////////////////////
+
+		li:not(.not-hoverable) ul,
+		li:not(.not-hoverable) .dropdown
+			/*
+			Hoverintent delay => Fade out => Position offscreen
+
+			Time in seconds ->	0		.1      .2      .3      .4      .5
+								|	|	|	|	|	|	|	|	|	|	|
+			(hover intent) 		|---------------*
+			opacity fade out	|				*---------------*
+			left out 			|									*
+			*/
+			transition opacity .2s linear .2s, left 0s linear .45s
+
+		li.not-hoverable > ul,
+		li.not-hoverable > .dropdown
+			/*
+			Fade out => Position offscreen
+
+			Time in seconds ->	0		.1      .2      .3      .4      .5
+								|	|	|	|	|	|	|	|	|	|	|
+			opacity fade out	|---------------*
+			left out 			|					*
+			*/
+			transition opacity .2s linear, left 0s linear .25s
+
+		li.focus > ul,
+		li.focus > .dropdown,
+		li.locked-active > ul,
+		li.locked-active > .dropdown
+			/*
+			Fade in immediately (no hoverintent delay)
+
+			Time in seconds ->	0		.1      .2      .3      .4      .5
+								|	|	|	|	|	|	|	|	|	|	|
+			opacity fade in     |-----------*
+			*/
+			transition opacity .15s linear 0s
+
+		li:hover:not(.not-hoverable) > ul,
+		li:hover:not(.not-hoverable) > .dropdown
+			/*
+			Hoverintent delay => Position onscreen => Fade in
+
+			Time in seconds ->	0		.1      .2      .3      .4      .5 		.6
+								|	|	|	|	|	|	|	|	|	|	|	|	|
+			(hover intent)		|---------------*
+			left in				|				*
+			opacity fade in		|				*-----------*
+			*/
+			transition left 0s linear .2s, opacity .15s linear .2s
+
+		// If JS decides there is too little room in the viewport
+		// for the menu to appear on the right, it will appear on
+		// the left instead by applying the class "flip".
+
+		li:not(.not-hoverable) ul.flip,
+		li:not(.not-hoverable) .dropdown.flip
+			/*
+			Hoverintent delay => Fade out => Position offscreen
+
+			Time in seconds ->	0		.1      .2      .3      .4      .5
+								|	|	|	|	|	|	|	|	|	|	|
+			(hover intent) 		|---------------*
+			opacity fade out	|				*---------------*
+			right out 			|									*
+			*/
+			transition right 0s linear .45s, opacity .2s linear .2s
+
+		li.focus:not(.not-hoverable) > ul.flip,
+		li:hover:not(.not-hoverable) > ul.flip,
+		li.focus:not(.not-hoverable) > .dropdown.flip,
+		li:hover:not(.not-hoverable) > .dropdown.flip
+			/*
+			Hoverintent delay => Position onscreen => Fade in
+
+			Time in seconds ->	0		.1      .2      .3      .4      .5 		.6
+								|	|	|	|	|	|	|	|	|	|	|	|	|
+			(hover intent)		|---------------*
+			right in			|				*
+			opacity fade in		|				*-----------*
+			*/
+			transition right 0s linear .2s, opacity .15s linear .2s
+		
+			
+	/body:not({".GB-" + index + "-ForceMobileMode"}) &
+		@media (min-width: breakpoint)
+			{desktopStyles}
+	/body{".GB-" + index + "-ForceDesktopMode"} &
+		{desktopStyles}
+
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	//
+	// Base
+	//
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// Minimize the antialiasing shift on transforms
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+	-webkit-font-smoothing subpixel-antialiased
+
+
+
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+	//
+	// Visibility
+	//
+	//////////////////////////////////////////////////////////////////
+	//////////////////////////////////////////////////////////////////
+
+
+	//////////////////////////////////////////////////////////////////
+	// Hide menus offscreen
+	//////////////////////////////////////////////////////////////////
+
+	styles =
+		
+		li ul,
+		li .dropdown
+			position absolute
+			left -999em
+			top auto
+			width 100%
+			height auto !important
+			overflow visible !important
+			opacity .01
+
+			li ul,
+			li .dropdown
+				top 0
+
+		&.flip-v
+
+			li ul,
+			li .dropdown
+				bottom 100%
+
+				li ul,
+				li .dropdown
+					top auto
+					bottom 0
+
+		&.hideSecondaryNav > ul:nth-of-type(2)
+			position absolute
+			left -999em
+			top auto
+			width 100%
+			height auto !important
+			overflow visible !important
+			opacity .01
+
+	
+	@media (min-width: breakpoint)
+		/body:not({".GB-" + index + "-ForceMobileMode"}) &
+			{styles}
+	/body{".GB-" + index + "-ForceDesktopMode"} &
+		{styles}
+		
+	styles =
+		li.closed > ul,
+		li.closed > .dropdown,
+		&.mobileHide > ul
+			position absolute
+			display none
+			left -999em
+			top auto
+			height auto
+			overflow visible
+			width 100%
+	
+	/body:not({".GB-" + index + "-ForceDesktopMode"}) &
+		@media (max-width: breakpoint - 1)
+			{styles}
+	/body{".GB-" + index + "-ForceMobileMode"}:not({".GB-" + index + "-ForceDesktopMode"}) &
+		{styles}
+
+
+
+	//////////////////////////////////////////////////////////////////
+	// States
+	//////////////////////////////////////////////////////////////////
+
+	styles =
+
+		// Menus slide effect finished state
+		li.focus:not(.not-hoverable) > ul,
+		li:hover:not(.not-hoverable) > ul,
+		li.focus:not(.not-hoverable) > .dropdown,
+		li:hover:not(.not-hoverable) > .dropdown,
+		li.locked-active > ul,
+		li.locked-active > .dropdown
+			opacity 1
+			left 0
+
+		// Fly-out menus slide effect finished state
+		li li.focus:not(.not-hoverable) > ul,
+		li li:hover:not(.not-hoverable) > ul,
+		li li.focus:not(.not-hoverable) > .dropdown,
+		li li:hover:not(.not-hoverable) > .dropdown,
+		li li.locked-active > ul,
+		li li.locked-active > .dropdown
+			left 100%
+
+		// Flipped menus (when side-flyouts can't fit in the viewport on the right side of the parent menu)
+		li ul.flip,
+		li .dropdown.flip
+			left auto
+			right 99999em
+
+		// Flipped menus visible states
+		li.focus:not(.not-hoverable) > ul.flip,
+		li:hover:not(.not-hoverable) > ul.flip,
+		li.focus:not(.not-hoverable) > .dropdown.flip,
+		li:hover:not(.not-hoverable) > .dropdown.flip,
+		li.locked-active > ul.flip,
+		li.locked-active > .dropdown.flip
+			left auto !important
+			right 100%
+
+		> ul > li.focus:not(.not-hoverable) > ul.flip,
+		> ul > li:hover:not(.not-hoverable) > ul.flip,
+		> ul > li.focus:not(.not-hoverable) > .dropdown.flip,
+		> ul > li:hover:not(.not-hoverable) > .dropdown.flip,
+		> ul > li.locked-active > ul.flip,
+		> ul > li.locked-active > .dropdown.flip
+			right 0
+
+	
+	@media (min-width: breakpoint)
+		/body:not({".GB-" + index + "-ForceMobileMode"}) &
+			{styles}
+	/body{".GB-" + index + "-ForceDesktopMode"} &
+		{styles}
+
+		
+	//////////////////////////////////////////////////////////////////
+	// Mobile elements
+	//////////////////////////////////////////////////////////////////
+	
+	styles =
+		.submenuTogglers
+			display none !important
+
+	/body:not({".GB-" + index + "-ForceMobileMode"}) &
+		@media (min-width: breakpoint)
+			{styles}
+	/body{".GB-" + index + "-ForceDesktopMode"} &
+		{styles}
+
+	.burger
+		/body:not({".GB-" + index + "-ForceMobileMode"}) &
+			@media (min-width: breakpoint)
+				position absolute
+				display none
+				left -200vw
+		/body{".GB-" + index + "-ForceDesktopMode"} &
+			position absolute
+			left -200vw
+
+	li.hide-link-in-mobile > a,
+	li.hide-link-in-mobile > .linkless-nav-item
+
+		styles = 
+			display none
+
+		/body:not({".GB-" + index + "-ForceDesktopMode"}) &
+			@media (max-width: breakpoint - 1)
+				{styles}
+		/body{".GB-" + index + "-ForceMobileMode"}:not({".GB-" + index + "-ForceDesktopMode"}) &
+			{styles}
