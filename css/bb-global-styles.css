@@ -130,6 +130,8 @@ body {
 .color-mode p {
   font-size: 1.2rem;
   color: var(--element2, #222);
+  position: relative;
+  z-index: 1;
 }
 .color-mode a {
   color: var(--element2, #222);
