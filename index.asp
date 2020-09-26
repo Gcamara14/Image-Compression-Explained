@@ -40,7 +40,9 @@
         <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
       </symbol>
     </svg>	
-	<h1>Hello World!</h1>
+	<h1 class="text-center">Image Compression Explained <br>
+		<small>Uncompressed</small>
+	</h1>
   <button
     class="color-mode__btn light--hidden"
     aria-label="Toggle light mode"
@@ -61,6 +63,37 @@
       <use href="#moon"></use>
     </svg>
   </button>
+  <div id="uncompressed" class="image-wrapper color-mode">
+  	<h2>Overview</h2>
+  	<p>There are 20 images. <br> Each image is in its original format ranging from approximately 1MB thru 4MB each. No image optimizations have been done. Typical photographs provided by photographers shot in RAW can go anywhere from 1MB thru 25MB.</p>
+  	<h2>TLDR;</h2>
+  	<p>BAD: images with a file size from 1MB and up = BAD</p>
+  	<p>GOOD: images with a file size less then 300KB and below is good</p>
+  	<p>Great: images with a file size less than 100KB. You are wise and a scholar</p>
+  	<img src="/img/1uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/2uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/3uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/4uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/6uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/7uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/8uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/9uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/10uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/11uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/12uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/13uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/14uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/15uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/16uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/17uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/18uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/19uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/20uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<img src="/img/5uncompressed-flower-wide.jpg" alt="" class="image-wrapper--img">
+  	<h2>The End</h2>
+  	<p>In conclusion. Image compression matters.</p>
+  	<p>Credits: <a href="https://giovanicamara.com">Giovani Camara</a></p>
+  </div>
   </main>
 
 	<!-- Start of footer scripts — convert to a reusable partial/include/view -->

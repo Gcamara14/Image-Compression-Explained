@@ -43,6 +43,8 @@ html
 body
     padding 0
     margin 0
+    background-color #e6e6e6
+    background-color var(--surface1, #e6e6e6)    
 
 .color-mode
     display flex
@@ -59,6 +61,11 @@ body
     h2
         color #222222
         color var(--element2, #222222)
+    p
+      font-size 1.2rem
+      color var(--element2, #222222)
+    a
+      color var(--element2, #222222)
 
 :root[color-mode="light"]
     .color-mode
@@ -73,6 +80,9 @@ body
 @media (min-width: 640px)
     .color-mode
         padding 2rem
+
+.text-center
+  text-align center
 
 .color-mode__header
     position relative
@@ -184,3 +194,16 @@ body
 .color-mode__excerpt a:hover, .color-mode__excerpt a:focus
     color #3c5d5c
     color var(--secondary, #3c5d5c)  
+    
+.image-wrapper
+  max-width 640px
+  padding 1rem 3rem
+  margin 0 auto
+  
+  img
+    width 100%
+    height auto
+    margin-bottom 5px
+    
+    &:last-child
+      margin-bottom 0

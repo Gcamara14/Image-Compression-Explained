@@ -104,3 +104,7 @@ body.user-is-tabbing footer *:focus {
   text-decoration: underline !important;
   transition: none !important;
 }
+body.user-is-tabbing .color-mode__btn svg {
+  fill: #000;
+  stroke: #000;
+}

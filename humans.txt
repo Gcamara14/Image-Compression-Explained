@@ -1,18 +1,104 @@
 /* TEAM */
-
-	Project Manager: Brian Kreck
-	Designer: Sandra Versteegh
 	Developer: Giovani Camara
-	Account Manager: Lydia Revelos
 
 /* SITE */
 
-	Last Update: 2020/01/18
+	Last Update: 2020/9/26
 	Doctype: HTML 5
 	Language: English
 	IDE: Sublime Text, Filezilla, Photoshop, Illustrator
 
 /* CONTACT */	
 	
-	URL: Budbreak.com
-	Email: info [at] budbreak.com
+	URL: giovanicamara.com
+	Email: giovani [at] webaccessibility.org
+
+/* Credits */	
+	
+	- Dark Mode:
+	https://ryanfeigenbaum.com/dark-mode/
+
+	- Unsplash Collection images
+	https://unsplash.com/collections/17098/floral-beauty
+
+	- Photos via unsplash:
+
+	"username": "fachymarin",
+	"name": "Fachy Marín",
+	"link": "https://unsplash.com/@fachymarin"
+
+	"username": "ujitomo",
+	"name": "TOMOKO UJI",
+	"link": "https://unsplash.com/@ujitomo"
+
+	"username": "tosshio",
+	"name": "Jatniel Tunon",
+	"link": "https://unsplash.com/@tosshio"
+
+	"username": "chris_jolly",
+	"name": "Christopher Jolly",
+	"link": "https://unsplash.com/@chris_jolly"
+
+	"username": "sorasagano",
+	"name": "Sora Sagano",
+	"link": "https://unsplash.com/@sorasagano"
+
+	"username": "timmossholder",
+	"name": "Tim Mossholder",
+	"link": "https://unsplash.com/@timmossholder"
+
+	"username": "yespanioly",
+	"name": "Yousef Espanioly",
+	"link": "https://unsplash.com/@yespanioly"
+
+	"username": "scottwebb",
+	"name": "Scott Webb",
+	"link": "https://unsplash.com/@scottwebb"
+
+	"username": "milzography",
+	"name": "Milana Milzography",
+	"link": "https://unsplash.com/@milzography"
+
+	"username": "shimikumi32",
+	"name": "Kumiko SHIMIZU",
+	"link": "https://unsplash.com/@shimikumi32"
+
+	"username": "markusspiske",
+	"name": "Markus Spiske",
+	"link": "https://unsplash.com/@markusspiske"
+
+	"username": "kvtepov",
+	"name": "Vlad Kutepov",
+	"link": "https://unsplash.com/@kvtepov"
+
+	"username": "radek_blackseven",
+	"name": "Radek Kilijanek",
+	"link": "https://unsplash.com/@radek_blackseven"
+
+	"username": "a_g_b",
+	"name": "Alex Boyd",
+	"link": "https://unsplash.com/@a_g_b"
+
+	"username": "hpzworkz",
+	"name": "Hassan Pasha",
+	"link": "https://unsplash.com/@hpzworkz"
+
+	"username": "anetek",
+	"name": "Aneta Foubíková",
+	"link": "https://unsplash.com/@anetek"
+
+	"username": "dpmb87",
+	"name": "Daniel Brubaker",
+	"link": "https://unsplash.com/@dpmb87"
+
+	"username": "mana5280",
+	"name": "mana5280",
+	"link": "https://unsplash.com/@mana5280"
+
+	"username": "hishahadat",
+	"name": "Shahadat Rahman",
+	"link": "https://unsplash.com/@hishahadat"
+
+	"username": "kazuend",
+	"name": "kazuend",
+	"link": "https://unsplash.com/@kazuend"

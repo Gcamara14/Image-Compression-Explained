@@ -102,6 +102,8 @@ html {
 body {
   padding: 0;
   margin: 0;
+  background-color: #e6e6e6;
+  background-color: var(--surface1, #e6e6e6);
 }
 .color-mode {
   display: -ms-flexbox;
@@ -125,6 +127,13 @@ body {
   color: #222;
   color: var(--element2, #222);
 }
+.color-mode p {
+  font-size: 1.2rem;
+  color: var(--element2, #222);
+}
+.color-mode a {
+  color: var(--element2, #222);
+}
 :root[color-mode="light"] .color-mode .light--hidden {
   display: none;
 }
@@ -135,6 +144,9 @@ body {
   .color-mode {
     padding: 2rem;
   }
+}
+.text-center {
+  text-align: center;
 }
 .color-mode__header {
   position: relative;
@@ -258,4 +270,17 @@ body {
 .color-mode__excerpt a:focus {
   color: #3c5d5c;
   color: var(--secondary, #3c5d5c);
+}
+.image-wrapper {
+  max-width: 640px;
+  padding: 1rem 3rem;
+  margin: 0 auto;
+}
+.image-wrapper img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 5px;
+}
+.image-wrapper img:last-child {
+  margin-bottom: 0;
 }
